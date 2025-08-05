@@ -1,0 +1,183 @@
+<div class="container mx-auto px-4 py-8 max-w-7xl">
+  <!-- Header Section -->
+  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Cooking Classes</h1>
+    
+    <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+      <!-- Search Input -->
+      <div class="relative">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="search()" 
+          placeholder="Search by class name..." 
+          class="border border-gray-300 rounded-lg block w-full sm:w-64 pl-10 pr-4 py-2.5 text-sm 
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent
+                 transition duration-150 ease-in-out"
+                 >
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Refresh Button -->
+      <button 
+        onclick="window.location.reload();"
+        class="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-medium rounded-lg 
+               text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
+               focus:ring-teal-500 transition duration-150 ease-in-out"
+      >
+        <svg class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Refresh
+      </button>
+    </div>
+  </div>
+  
+  <!-- Loading State -->
+  <div *ngIf="loading" class="bg-white rounded-lg shadow-lg p-8 text-center">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-teal-600 mx-auto"></div>
+    <p class="mt-4 text-lg font-medium text-gray-700">Loading classes...</p>
+  </div>
+  
+  <!-- Error State -->
+  <div *ngIf="!loading && error" class="bg-red-50 border border-red-300 text-red-700 px-6 py-4 rounded-lg shadow-sm" role="alert">
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3">
+        <p class="font-medium">{{ error }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Table Section -->
+  <div *ngIf="!loading && !error">
+    <!-- Empty State -->
+    <div *ngIf="filteredClasses.length === 0" class="bg-white rounded-lg shadow-lg p-8 text-center">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <p class="mt-4 text-lg font-medium text-gray-700">No records found</p>
+      <p class="mt-1 text-sm text-gray-500">Try adjusting your search to find what you're looking for.</p>
+    </div>
+    
+    <!-- Table -->
+    <div *ngIf="filteredClasses.length > 0" class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Class Name</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Chef Name</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Location</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Duration</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Fee</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Skill Level</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let cookingClass of filteredClasses" class="hover:bg-gray-50 transition duration-150 ease-in-out">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm font-medium text-gray-900">{{ cookingClass.className }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ cookingClass.chefName }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ cookingClass.location }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ cookingClass.durationInHours }} hours</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">{{ cookingClass.fee | currency }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span [ngClass]="{
+                  'bg-green-100 text-green-800': cookingClass.skillLevel === 'Beginner',
+                  'bg-blue-100 text-blue-800': cookingClass.skillLevel === 'Intermediate',
+                  'bg-purple-100 text-purple-800': cookingClass.skillLevel === 'Advanced'
+                }" class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full">
+                  {{ cookingClass.skillLevel }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <button 
+                  (click)="editClass(cookingClass.cookingClassId)" 
+                  class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition duration-150 ease-in-out mr-2"
+                >
+                  <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  Edit
+                </button>
+                <button 
+                  (click)="confirmDelete(cookingClass)" 
+                  class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
+                >
+                  <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Enhanced Delete Confirmation Modal -->
+<div *ngIf="showDeleteModal && selectedClass" class="fixed inset-0 backdrop-blur-sm transition-opacity flex justify-center items-center p-4" style="z-index: 1000;">
+  <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold text-gray-900">Confirm Delete</h3>
+    </div>
+    
+    <!-- Modal Content -->
+    <div class="px-6 py-4">
+      <div class="flex items-start space-x-3">
+        <div class="flex-shrink-0">
+          <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-700">
+            Are you sure you want to delete <strong>{{ selectedClass.className }}</strong>?
+          </p>
+          <p class="mt-2 text-sm text-gray-500">
+            This action cannot be undone.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-lg flex justify-end space-x-4">
+      <button 
+        class="inline-flex justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition duration-150 ease-in-out"
+        (click)="closeDeleteModal()"
+      >
+        Cancel
+      </button>
+      <button 
+        class="inline-flex justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
+        (click)="deleteClass()"
+      >
+        Delete Class
+      </button>
+    </div>
+  </div>
+</div>

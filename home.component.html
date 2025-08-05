@@ -1,0 +1,162 @@
+<div class="py-36 px-6">
+    <!-- Hero Section -->
+
+    <div class="flex justify-between items-center">
+        <div class="max-w-xl mx-auto w-[60%]" id="leftDiv">
+            <h1 class="text-6xl font-bold text-green">Welcome to Cooking Hub {{ username }}!</h1>
+            <p class="mt-6 font-medium text-yellow text-xl">
+                Discover the joy of cooking with our expert-led classes. Whether you're a beginner or an experienced
+                cook,
+                we have something for everyone.
+            </p>
+            <button class="mt-8 bg-[#0A6847] text-yellow py-3 px-6 rounded-lg text-lg font-semibold text-[#FFF5E0]">
+                Join the Culinary Adventure
+            </button>
+        </div>
+        <div class="w-[35%]" id="rightDiv">
+            <img src="../../../assets/cookinghub.png" alt="" class="h-96">
+        </div>
+    </div>
+
+    <div class="rounded-lg overflow-hidden my-32 h-96">
+        <video autoplay muted loop preload="auto" class="w-full h-full object-cover ">
+            <source src="../../../assets/cookingTutorial.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- -------------------- -->
+
+    <div class="bg-[#FFF5E0] min-h-screen">
+        <div class="container mx-auto py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="p-6 flex-1">
+                        <h2 class="text-2xl font-bold text-[#0A6847] mb-4">
+                            <span *ngIf="isAdmin">Manage Cooking Classes</span>
+                            <span *ngIf="!isAdmin">Explore Cooking Classes</span>
+                        </h2>
+                        <p class="text-gray-700 mb-4">
+                            <span *ngIf="isAdmin">Create, edit, and manage cooking classes to offer the best experience
+                                to our users.</span>
+                            <span *ngIf="!isAdmin">Browse through our diverse range of cooking classes led by
+                                professional chefs.</span>
+                        </p>
+                        <div class="mt-4">
+                            <a *ngIf="isAdmin" routerLink="/admin/view-class"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0A6847] hover:bg-[#085239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+                                View Classes
+                            </a>
+                            <a *ngIf="!isAdmin" routerLink="/user/view-classes"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0A6847] hover:bg-[#085239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+                                Browse Classes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                    <div class="p-6 flex-1">
+                        <h2 class="text-2xl font-bold text-[#0A6847] mb-4">
+                            <span *ngIf="isAdmin">Manage Class Requests</span>
+                            <span *ngIf="!isAdmin">Track Your Enrollments</span>
+                        </h2>
+                        <p class="text-gray-700 mb-4">
+                            <span *ngIf="isAdmin">Review and manage class requests from users and update their
+                                status.</span>
+                            <span *ngIf="!isAdmin">Keep track of your class requests and check their approval
+                                status.</span>
+                        </p>
+                        <div class="mt-4">
+                            <a *ngIf="isAdmin" routerLink="/admin/view-requests"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0A6847] hover:bg-[#085239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+                                View Requests
+                            </a>
+                            <a *ngIf="!isAdmin" routerLink="/user/applied-requests"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0A6847] hover:bg-[#085239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+                                My Enrollments
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" mx-auto mt-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-2xl font-bold text-[#0A6847] mb-4">
+                            <span *ngIf="isAdmin">User Feedback</span>
+                            <span *ngIf="!isAdmin">Share Your Experience</span>
+                        </h2>
+                        <p class="text-gray-700 mb-4">
+                            <span *ngIf="isAdmin">View feedback from users to improve our cooking classes and
+                                services.</span>
+                            <span *ngIf="!isAdmin">We'd love to hear about your experience! Share your feedback with
+                                us.</span>
+                        </p>
+                        <div class="mt-4">
+                            <a *ngIf="isAdmin" routerLink="/admin/view-feedback"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0A6847] hover:bg-[#085239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+                                View Feedback
+                            </a>
+                            <a *ngIf="!isAdmin" routerLink="/user/add-feedback"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#0A6847] hover:bg-[#085239] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+                                Give Feedback
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ---------- -->
+    <!-- Feature Highlights Section -->
+    <div class="bg-[#F3CA52] pt-2 px-3 pb-16 rounded-lg">
+
+        <div class="mt-16 grid grid-cols-1 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto ">
+            <div class="flex flex-col items-center text-center">
+                <iframe src="https://lottie.host/embed/8aa4d1e5-7082-4990-b319-5a47782dd1da/JYOXGdayu5.lottie"></iframe>
+                <h3 class="mt-6 text-2xl font-semibold text-green">Expert Recipes</h3>
+                <p class="mt-2 text-yellow text-lg font-medium">
+                    Discover recipes crafted by culinary experts to elevate your cooking skills.
+                </p>
+            </div>
+            <div class="flex flex-col items-center text-center">
+                <iframe src="https://lottie.host/embed/c306f81d-3d1a-4cca-8b59-564f1ccf89ba/mttX6Zvizu.lottie"></iframe>
+                <h3 class="mt-6 text-2xl font-semibold text-green">Live Workshops</h3>
+                <p class="mt-2 text-yellow text-lg font-medium">
+                    Join interactive workshops hosted by professional chefs worldwide.
+                </p>
+            </div>
+            <div class="flex flex-col items-center text-center">
+                <iframe src="https://lottie.host/embed/fbd69f22-985c-4455-9b21-42f7e0eebf86/yVLcIxO8Fw.lottie"></iframe>
+                <h3 class="mt-6 text-2xl font-semibold text-green">Cooking Resources</h3>
+                <p class="mt-2 text-yellow text-lg font-medium">
+                    Access a treasure trove of cooking tips, guides, and must-know techniques.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div #statsSection class="mt-20 max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center text-green">Why Choose Cooking Hub?</h2>
+        <div class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="flex flex-col items-center">
+                <dd class="text-5xl font-bold text-green"><span id="stat1">0</span></dd>
+                <dt class="text-lg font-medium text-yellow">Countries We Inspire</dt>
+            </div>
+            <div class="flex flex-col items-center">
+                <dd class="text-5xl font-bold text-green"><span id="stat2">0</span>+</dd>
+                <dt class="text-lg font-medium text-yellow">Recipes Shared</dt>
+            </div>
+            <div class="flex flex-col items-center">
+                <dd class="text-5xl font-bold text-green"><span id="stat3">0</span>+</dd>
+                <dt class="text-lg font-medium text-yellow">Workshops Offered</dt>
+            </div>
+            <div class="flex flex-col items-center">
+                <dd class="text-5xl font-bold text-green"><span id="stat4">0</span>K+</dd>
+                <dt class="text-lg font-medium text-yellow">Happy Foodies</dt>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+  <!-- <app-usernav></app-usernav> -->
+<div class="container mx-auto px-4 py-8 bg-[url(../assets/doodle.png)]">
+  <div class="max-w-3xl mx-auto bg-[#FFF5E0] p-8 border rounded-lg shadow ">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Add Feedback</h2>
+    
+    <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div>
+        <label for="feedback" class="block text-sm font-medium text-gray-700 my-2">Your Feedback</label>
+        <textarea 
+          id="feedback" 
+          formControlName="feedbackText" 
+          rows="6" 
+          placeholder="Share your thoughts, suggestions, or experiences about our cooking classes..."
+          class="border rounded-lg block w-full p-2.5 text-sm outline-none"
+        ></textarea>
+        <div *ngIf="feedbackForm.get('FeedbackText')?.invalid && feedbackForm.get('FeedbackText')?.touched" class="text-red-500 text-xs mt-1">
+          <span *ngIf="feedbackForm.get('FeedbackText')?.errors?.required">Feedback is required</span>
+          <span *ngIf="feedbackForm.get('FeedbackText')?.errors?.minlength">Feedback must be at least 10 characters</span>
+        </div>
+      </div>
+      
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline">{{ errorMessage }}</span>
+      </div>
+      
+      <div class="flex justify-end">
+        <button 
+          type="submit" 
+          [disabled]="submitting" 
+          class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#0A6847] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]"
+        >
+          {{ submitting ? 'Submitting...' : 'Submit Feedback' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div *ngIf="showSuccessModal" class="fixed inset-0 backdrop-blur-xs flex justify-center items-center">
+  <div class="bg-white rounded-lg p-6 shadow-lg max-w-md">
+    <h3 class="text-lg font-medium text-gray-900 mb-4">Thank You!</h3>
+    <p class="text-gray-600 mb-6">Your feedback has been submitted successfully. We appreciate your input!</p>
+    <div class="flex justify-end">
+      <button 
+        class="bg-[#0A6847] text-white px-4 py-2 rounded hover:bg-green-600"
+        (click)="closeSuccessModal()"
+      >
+        OK
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="flex flex-col items-center justify-center px-6 py-32 mx-auto bg-[url(../assets/doodle.png)]">
+  <div class="w-full bg-[#FFF5E0] rounded-lg shadow shadow-lg border max-w-md font-bold">
+    <div class="space-y-6 p-8">
+      <h1 class=" text-[#0A6847] text-2xl">Registration</h1>
+      <p class="mt-2 text-sm text-gray-600">
+        Create a new account
+      </p>
+
+      <form class="space-y-4 md:space-y-6" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="username" class="block mb-2 text-sm text-[#0A6847]">Username</label>
+          <input id="username" name="username" type="text" formControlName="Username"
+            class="border rounded-lg block w-full p-2.5 text-sm outline-none" placeholder="Username">
+          <div *ngIf="registrationForm.get('Username')?.invalid && registrationForm.get('Username')?.touched"
+            class="text-red-500 text-xs mt-1">
+            <span *ngIf="registrationForm.get('Username')?.errors?.required">Username is required</span>
+            <span *ngIf="registrationForm.get('Username')?.errors?.minlength">Username must be at least 3
+              characters</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="email" class="block mb-2 text-sm text-[#0A6847]">Email address</label>
+          <input id="email" name="email" type="email" formControlName="Email"
+            class="border rounded-lg block w-full p-2.5 text-sm outline-none" placeholder="Email address">
+          <div *ngIf="registrationForm.get('Email')?.invalid && registrationForm.get('Email')?.touched"
+            class="text-red-500 text-xs mt-1">
+            <span *ngIf="registrationForm.get('Email')?.errors?.required">Email is required</span>
+            <span *ngIf="registrationForm.get('Email')?.errors?.email">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="mobile" class="block mb-2 text-sm text-[#0A6847]">Mobile Number</label>
+          <input id="mobile" name="mobile" type="tel" minlength="10" maxlength="10" formControlName="MobileNumber"
+            class="border rounded-lg block w-full p-2.5 text-sm outline-none" placeholder="10-digit mobile number">
+          <div *ngIf="registrationForm.get('MobileNumber')?.invalid && registrationForm.get('MobileNumber')?.touched"
+            class="text-red-500 text-xs mt-1">
+            <span *ngIf="registrationForm.get('MobileNumber')?.errors?.required">Mobile number is required</span>
+            <span *ngIf="registrationForm.get('MobileNumber')?.errors?.pattern">Please enter a valid 10-digit mobile
+              number</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="block mb-2 text-sm text-[#0A6847]">Password</label>
+          <input id="password" name="password" type="password" formControlName="Password"
+            class="border rounded-lg block w-full p-2.5 text-sm outline-none" placeholder="Password">
+          <div *ngIf="registrationForm.get('Password')?.invalid && registrationForm.get('Password')?.touched"
+            class="text-red-500 text-xs mt-1">
+            <span *ngIf="registrationForm.get('Password')?.errors?.required">Password is required</span>
+            <span *ngIf="registrationForm.get('Password')?.errors?.minlength">Password must be at least 6
+              characters</span>
+              <br>
+              <span *ngIf="registrationForm.get('Password')?.errors?.pattern">Password must contain uppercase, lowercase, number and special character</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="role" class="block mb-2 text-sm text-[#0A6847]">Role</label>
+          <select id="role" name="role" formControlName="UserRole"
+            class="border rounded-lg block w-full p-2.5 text-sm outline-none">
+            <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+          </select>
+        </div>
+
+        <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert">
+          <span class="block sm:inline">{{ errorMessage }}</span>
+        </div>
+
+        <div *ngIf="successMessage"
+          class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+          <span class="block sm:inline">{{ successMessage }}</span>
+        </div>
+
+        <div>
+          <button type="submit" [disabled]="submitting"
+            class="group relative w-full flex justify-center bg-[#0A6847] px-5 py-2.5 text-sm font-medium rounded-md text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0A6847]">
+            <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              <!-- User add icon -->
+              <svg class="h-5 w-5 text-green-500 group-hover:text-green-400" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20" fill="white" aria-hidden="true">
+                <path
+                  d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+              </svg>
+            </span>
+            {{ submitting ? 'Registering...' : 'Register' }}
+          </button>
+        </div>
+
+        <div class="text-center mt-4">
+          <p class="text-sm text-gray-600">
+            Already have an account?
+            <a routerLink="/login" class="font-medium text-green-600 hover:text-green-500">
+              Login here
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

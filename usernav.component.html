@@ -1,0 +1,82 @@
+<header class="top-0 z-50 bg-[#0A6847] text-[#FFF5E0]">
+  <nav class="flex items-center justify-between px-10 py-6">
+    <!-- Logo Section -->
+    <div class="flex gap-x-2">
+      <img src="../../../assets/cookinghub.png" alt="Cooking Hub" class="w-10">
+      <a href="/admin/home" class="font-extrabold text-3xl">
+        Cooking Hub
+      </a>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex gap-x-4 text-[#FFF5E0]">
+      <a routerLink="/cooking-imp" routerLinkActive="active-link" class="font-medium px-3 py-1">Importance of
+        Cooking</a>
+      <a routerLink="/user/view-classes" routerLinkActive="active-link"
+        class="font-medium px-3 py-1">Cooking Classes</a>
+      <a routerLink="/user/applied-requests" routerLinkActive="active-link"
+        class="font-medium px-3 py-1">Applied Classes</a>
+
+      <!-- Feedback Dropdown -->
+
+      <div class="relative">
+        <button id="dropdownDefaultButton" (click)="toggleDropdown()"
+          class="font-medium px-3 py-1 rounded-full border-[1.4px] border-[#FFF5E0] hover:bg-[#FFF5E0] hover:text-gray-900 flex gap-x-1 items-center"
+          type="button">
+          Feedback
+          <svg class="w-2.5 h-2.5 ml-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 10 6">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 4 4 4-4" />
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="dropdown" [class.hidden]="isDropdownHidden"
+          class="absolute bg-[#F3CA52] divide-y divide-gray-100 rounded-lg mt-2 w-36 z-50"
+          style="top: calc(100% + 10px); left: 0;">
+          <ul class="py-2 text-sm text-gray-700">
+            <li>
+              <a routerLink="/user/add-feedback"
+                class="block px-4 py-2  font-semibold hover:text-[#FFF5E0] hover:bg-[#0A6847]">
+                Post Feedback
+              </a>
+            </li>
+            <li>
+              <a routerLink="/user/view-feedback"
+                class="block px-4 py-2 font-semibold  hover:text-[#FFF5E0]  hover:bg-[#0A6847]">
+                My Feedbacks
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- User Info & Logout Section -->
+      <div>
+        <span class="mr-4 text-sm font-semibold">{{ username }} ({{ userRole }})</span>
+        <button (click)="confirmLogout()"
+          class="font-medium px-3 py-1 rounded-full border-[1.4px] border-[#FFF5E0] hover:bg-[#FFF5E0] hover:text-gray-900">
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Logout Confirmation Modal -->
+<div *ngIf="showLogoutModal" class="fixed inset-0 z-100 backdrop-blur-xs flex justify-center items-center">
+  <div class="bg-white rounded-lg p-6 w-96 max-w-md shadow-lg">
+    <h2 class="text-xl font-bold mb-4 text-[#0A6847]">Confirm Logout</h2>
+    <p class="mb-6">Are you sure you want to logout?</p>
+    <div class="flex justify-end space-x-4">
+      <button class="bg-gray-200 text-gray-800 font-medium px-4 py-2 rounded hover:bg-gray-300"
+        (click)="closeLogoutModal()">
+        Cancel
+      </button>
+      <button class="px-4 py-2 bg-red-600 font-medium text-white rounded hover:bg-red-700" (click)="logout()">
+        Yes, Logout
+      </button>
+    </div>
+  </div>
+</div>
